@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "como-client",
+  "version": "${version}",
+
+  "name": "Como Client",
+  "description": "A Minecraft utility mod developed with the aim of giving its users an advantage in most (if not all) situations (but since I made it it probably won't to be honest...), while still aiming to be as simplistic as possible.",
+  "authors": [
+    "gingerchicken"
+  ],
+  "contact": {
+    "homepage": "https://github.com/gingerchicken/como-client-dos",
+    "sources": "https://github.com/gingerchicken/como-client-dos"
+  },
+
+  "license": "MIT",
+  "icon": "assets/como-client/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.como.client.ComoClient"
+    ]
+  },
+  "mixins": [
+    "como-client.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.11",
+    "fabric-api": "*",
+    "minecraft": "~1.19.3",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
