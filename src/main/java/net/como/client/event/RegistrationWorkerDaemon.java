@@ -10,6 +10,12 @@ public class RegistrationWorkerDaemon {
         public void run() {
             while (running) {
                 operate();
+                // Sleep for a millisecond
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
