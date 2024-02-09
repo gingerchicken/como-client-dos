@@ -6,8 +6,11 @@ import net.como.client.event.RegistrationWorkerDaemon;
 import net.como.client.module.Module;
 import net.como.client.module.render.Greeter;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.client.MinecraftClient;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 
 public class ComoClient implements ModInitializer {
@@ -89,9 +92,17 @@ public class ComoClient implements ModInitializer {
         return this.modules.get(clazz);
     }
 
+    public Iterable<Module> getModules() {
+        return modules.values();
+    }
+
     private void registerModules() {
         this.registerModule(new Greeter());
 
         this.getModuleByClass(Greeter.class).setEnabled(true);
+    }
+
+    public MinecraftClient getClient() {
+        return MinecraftClient.getInstance();
     }
 }

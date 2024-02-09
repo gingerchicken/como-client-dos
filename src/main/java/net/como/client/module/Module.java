@@ -5,6 +5,8 @@ import net.como.client.event.EventListener;
 
 public abstract class Module implements EventListener {
     private boolean enabled;
+    private String category = "Misc"; // TODO enum?
+    private String description;
 
     /**
      * Get if the module is enabled
@@ -59,5 +61,21 @@ public abstract class Module implements EventListener {
      */
     protected void onDisable() {
         ComoClient.getInstance().getRegistrationWorker().addUnregisterFlag(this);
+    }
+
+    protected void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    protected void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
