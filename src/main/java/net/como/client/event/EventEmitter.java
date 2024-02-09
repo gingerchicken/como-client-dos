@@ -95,6 +95,9 @@ public class EventEmitter {
 
                 // Iterate over all listeners
                 for (EventListener listener : listeners) {
+                    // Check if the listener is enabled
+                    if (!listener.isEnabled()) continue;
+
                     // Get the @EventHandler methods
                     for (Method method : listener.getClass().getMethods()) {
                         // Check if the method has the EventHandler annotation

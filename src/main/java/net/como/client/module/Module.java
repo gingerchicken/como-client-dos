@@ -10,6 +10,7 @@ public abstract class Module implements EventListener {
      * Get if the module is enabled
      * @return if the module is enabled or not
      */
+    @Override
     public boolean isEnabled() {
         return enabled;
     }
@@ -50,13 +51,13 @@ public abstract class Module implements EventListener {
      * Called when the module is enabled
      */
     protected void onEnable() {
-        ComoClient.getInstance().getEventEmitter().registerListener(this);
+        ComoClient.getInstance().getRegistrationWorker().addRegisterFlag(this);
     }
 
     /**
      * Called when the module is disabled
      */
     protected void onDisable() {
-        ComoClient.getInstance().getEventEmitter().unregisterListener(this);
+        ComoClient.getInstance().getRegistrationWorker().addUnregisterFlag(this);
     }
 }

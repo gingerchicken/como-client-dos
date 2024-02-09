@@ -1,6 +1,8 @@
 package net.como.client;
 
 import net.como.client.event.EventEmitter;
+import net.como.client.event.RegistrationWorker;
+import net.como.client.event.RegistrationWorkerDaemon;
 import net.como.client.module.Module;
 import net.como.client.module.render.Greeter;
 import net.fabricmc.api.ModInitializer;
@@ -15,7 +17,11 @@ public class ComoClient implements ModInitializer {
 
     // Modules
     private HashMap<Class<? extends Module>, Module> modules = new HashMap<>();
+
+    // Events
     private EventEmitter eventEmitter = new EventEmitter();
+    private RegistrationWorker registrationWorker = new RegistrationWorker(eventEmitter);
+    private RegistrationWorkerDaemon registrationWorkerDaemon = new RegistrationWorkerDaemon(registrationWorker);
 
     /**
      * Get the instance of the ComoClient as a singleton
@@ -23,6 +29,22 @@ public class ComoClient implements ModInitializer {
      */
     public static ComoClient getInstance() {
         return instance;
+    }
+
+    /**
+     * Get the registration worker
+     * @return the registration worker
+     */
+    public RegistrationWorker getRegistrationWorker() {
+        return registrationWorker;
+    }
+
+    /**
+     * Get the registration worker daemon
+     * @return the registration worker daemon
+     */
+    public RegistrationWorkerDaemon getRegistrationWorkerDaemon() {
+        return registrationWorkerDaemon;
     }
 
     /**
@@ -38,6 +60,8 @@ public class ComoClient implements ModInitializer {
         instance = this;
 
 		LOGGER.info("Oh bugger, not this again.");
+
+        getRegistrationWorkerDaemon().start(); // TODO kill this!
 
         // Register modules
         this.registerModules();
