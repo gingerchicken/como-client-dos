@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import joptsimple.internal.Strings;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
+import imgui.flag.ImGuiWindowFlags;
+import imgui.type.ImString;
 import net.como.client.ComoClient;
 import net.como.client.gui.ImGuiScreen;
 import net.como.client.module.Module;
@@ -15,6 +18,7 @@ import net.como.client.module.render.ClickGUI;
 import net.como.client.utils.ImGuiUtils;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.ColorHelper;
 
 public class ClickGUIScreen extends ImGuiScreen {
     // Search category tones
@@ -34,6 +38,11 @@ public class ClickGUIScreen extends ImGuiScreen {
      * The current search phrase
     */
     private static String searchPhrase = "";
+
+    /**
+     * The search example
+     */
+    private String searchExample;
 
     /**
      * Reset the window position next time it's opened
@@ -59,15 +68,34 @@ public class ClickGUIScreen extends ImGuiScreen {
             // Add the module to the category
             categories.get(cat).add(mod);
         }
+
+        updateSearchExample();
     }
 
     @Override
     protected void renderImGui(float tickDelta) {
         this.renderModules(tickDelta);
+        this.renderSearch(tickDelta);
     }
 
     private float getScale() {
         return 1.0f; // TODO Add a setting
+    }
+
+    private void updateSearchExample() {
+        if (searchExample != null && !searchExample.isEmpty()) return;
+
+        List<String> moduleNames = new ArrayList<>();
+
+        for (Module mod : ComoClient.getInstance().getModules()) {
+            moduleNames.add(mod.getName());
+        }
+
+        // Select a random module name
+        int i = (int)(Math.random() * moduleNames.size());
+
+        // Set the search example
+        this.searchExample = moduleNames.get(i);
     }
 
     /**
@@ -115,9 +143,9 @@ public class ClickGUIScreen extends ImGuiScreen {
             List<Module> modules = new ArrayList<>(categories.get(cat));
 
             // Remove all of the modules from the list that don't contain the search phrase
-            // if (searchPhrase != null && !searchPhrase.isEmpty() && !resetNext) {
-            //     modules.removeIf(mod -> !mod.getName().toLowerCase().contains(searchPhrase.toLowerCase()));
-            // }
+            if (searchPhrase != null && !searchPhrase.isEmpty() && !resetNext) {
+                modules.removeIf(mod -> !mod.getName().toLowerCase().contains(searchPhrase.toLowerCase()));
+            }
 
             // Sort the list alphabetically
             modules.sort((a, b) -> a.getName().compareTo(b.getName()));
@@ -227,6 +255,49 @@ public class ClickGUIScreen extends ImGuiScreen {
     }
 
     /**
+     * Render the search window
+     * @param tickDelta tick delta
+     * @return the search phrase
+     */
+    private String renderSearch(float tickDelta) {
+        // Set the default position
+        ImGui.setNextWindowPos(this.width - 100f*getScale(), 16* this.getScale(), getSaveCondition());
+
+        // Set the window size
+        // Set the scaled window size
+        ImGui.setNextWindowSize(200f * this.getScale(), 0);
+
+        // Make it so that the window is just enough to fit a textbox in
+        ImGui.setNextWindowContentSize(0, 0f);
+
+        // Begin the window
+        ImGui.begin("Search", ImGuiWindowFlags.NoResize);
+        // Hover the search button
+        if (ImGui.isItemHovered()) {
+            ImGui.setTooltip("Search for a module");
+        }
+
+        ImGui.pushItemWidth(-1);
+        // Render the search input
+        ImString str = new ImString(searchPhrase, 64);
+        ImGui.inputTextWithHint(Strings.EMPTY, "e.g. " + this.searchExample, str);
+
+        // Check for changes in the search phrase
+        if (!str.toString().equals(searchPhrase)) {
+            // Update the background tone
+            this.emptyBgTone = 1f;
+        }
+
+        searchPhrase = str.toString();
+
+        ImGui.popItemWidth();
+
+        ImGui.end();
+
+        return searchPhrase;
+    }
+
+    /**
      * Get the save condition for the window, if it should be saved or not to the ImGui.ini file
      * @return ImGuiCondition for the window
      */
@@ -302,13 +373,12 @@ public class ClickGUIScreen extends ImGuiScreen {
         // Actual background darkness
         float d = 1 - backgroundDarkness;
         
-        // Colours (ARGB)
+        // Colours
         int startColour = (int)(d * 100);
         int endColour   = (int)(d * 150);
 
-        // Convert it from 0 -> 255 to 0 -> 0xFF
-        startColour = (startColour << 24) | 0x00FFFFFF;
-        endColour   = (endColour   << 24) | 0x00FFFFFF;
+        startColour = ColorHelper.Argb.getArgb(startColour, 0, 0, 0);
+        endColour   = ColorHelper.Argb.getArgb(endColour, 0, 0, 0);
 
         // Draw the background
         context.fillGradient(0, 0, this.width, this.height, startColour, endColour);
