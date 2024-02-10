@@ -1,8 +1,10 @@
 package net.como.client;
 
+import net.como.client.binds.Bindings;
 import net.como.client.event.EventEmitter;
 import net.como.client.event.RegistrationWorker;
 import net.como.client.event.RegistrationWorkerDaemon;
+import net.como.client.module.Binds;
 import net.como.client.module.Module;
 import net.como.client.module.render.*;
 import net.fabricmc.api.ModInitializer;
@@ -26,6 +28,13 @@ public class ComoClient implements ModInitializer {
     private EventEmitter eventEmitter = new EventEmitter();
     private RegistrationWorker registrationWorker = new RegistrationWorker(eventEmitter);
     private RegistrationWorkerDaemon registrationWorkerDaemon = new RegistrationWorkerDaemon(registrationWorker);
+
+    // Key binds
+    private final Bindings bindings = new Bindings();
+
+    public Bindings getBindings() {
+        return bindings;
+    }
 
     /**
      * Get the instance of the ComoClient as a singleton
@@ -98,11 +107,12 @@ public class ComoClient implements ModInitializer {
     }
 
     private void registerModules() {
+        this.registerModule(new Binds());
         this.registerModule(new Greeter());
         this.registerModule(new ClickGUI());
 
+        this.getModuleByClass(Binds.class).setEnabled(true);
         this.getModuleByClass(Greeter.class).setEnabled(true);
-        this.getModuleByClass(ClickGUI.class).setEnabled(true);
     }
 
     public MinecraftClient getClient() {
