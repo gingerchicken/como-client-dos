@@ -6,7 +6,9 @@
   "mixins": [
   ],
   "client": [
-    "TitleScreenLogoMixin"
+    "TitleScreenLogoMixin",
+    "ClientPlayerEntityMixin",
+    "KeyboardMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -33,14 +33,14 @@ public class ImGuiUtils {
     /**
      * Has ImGui been initialised
      */
-    private static boolean initised = false;
+    private static boolean initalised = false;
 
     /**
      * Gets if the ImGui has been initialised.
      * @return if the ImGui has been initialised.
      */
     public static boolean isInitalised() {
-        return initised;
+        return initalised;
     }
 
     /**
@@ -203,7 +203,7 @@ public class ImGuiUtils {
         }
 
         // Set that the ImGui has been initalised
-        initised = true;
+        initalised = true;
 
         // Get the window handle
         long handle = ComoClient.getInstance().getClient().getWindow().getHandle();

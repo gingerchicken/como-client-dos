@@ -4,9 +4,10 @@ import net.como.client.event.EventEmitter;
 import net.como.client.event.RegistrationWorker;
 import net.como.client.event.RegistrationWorkerDaemon;
 import net.como.client.module.Module;
-import net.como.client.module.render.Greeter;
+import net.como.client.module.render.*;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,11 +99,17 @@ public class ComoClient implements ModInitializer {
 
     private void registerModules() {
         this.registerModule(new Greeter());
+        this.registerModule(new ClickGUI());
 
         this.getModuleByClass(Greeter.class).setEnabled(true);
+        this.getModuleByClass(ClickGUI.class).setEnabled(true);
     }
 
     public MinecraftClient getClient() {
         return MinecraftClient.getInstance();
+    }
+
+    public ClientPlayerEntity me() {
+        return getClient().player;
     }
 }

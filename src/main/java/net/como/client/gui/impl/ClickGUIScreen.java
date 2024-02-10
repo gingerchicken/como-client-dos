@@ -11,6 +11,10 @@ import imgui.flag.ImGuiStyleVar;
 import net.como.client.ComoClient;
 import net.como.client.gui.ImGuiScreen;
 import net.como.client.module.Module;
+import net.como.client.module.render.ClickGUI;
+import net.como.client.utils.ImGuiUtils;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class ClickGUIScreen extends ImGuiScreen {
     // Search category tones
@@ -18,8 +22,19 @@ public class ClickGUIScreen extends ImGuiScreen {
     private final static float EMPTY_BG_TONE_SPEED = -0.05f;
     private final static float EMPTY_BG_TONE_MIN = 0.5f;
 
+    private float backgroundDarkness = 1.0f;
+    private final static float BACKGROUND_DARKNESS_SPEED = -0.10f;
+    private final static float BACKGROUND_DARKNESS_MIN = 0f;
+
     private HashMap<String, List<Module>> categories = new HashMap<>();
+
+    private static HashMap<Module, Boolean> openedOptions = new HashMap<>();
     
+    /**
+     * The current search phrase
+    */
+    private static String searchPhrase = "";
+
     /**
      * Reset the window position next time it's opened
      */
@@ -28,6 +43,7 @@ public class ClickGUIScreen extends ImGuiScreen {
     @Override
     protected void init() {
         super.init();
+        // ImGuiUtils.refreshStyle();
 
         // Clear the categories
         categories.clear();
@@ -216,5 +232,90 @@ public class ClickGUIScreen extends ImGuiScreen {
      */
     private static int getSaveCondition() {
         return !resetNext ? ImGuiCond.FirstUseEver : ImGuiCond.Always;
+    }
+
+    @Override
+    public boolean shouldPause() {
+        return false;
+    }
+
+    ClickGUI getClickGUI() {
+        return (ClickGUI)ComoClient.getInstance().getModuleByClass(ClickGUI.class);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (!this.getClickGUI().isEnabled()) this.close();
+
+        // Handle reset next
+        if (resetNext) {
+            resetNext = false;
+            
+            // Clear the search
+            searchPhrase = "";
+
+            // Clear the opened settings
+            openedOptions.clear();
+        }
+
+        // Update the global ImGUI scale
+        ImGui.getIO().setFontGlobalScale(this.getScale());
+
+        // Background darkness
+        if (this.backgroundDarkness > BACKGROUND_DARKNESS_MIN) {
+            this.backgroundDarkness += BACKGROUND_DARKNESS_SPEED;
+        }
+
+        // Category tones
+        if (this.emptyBgTone > EMPTY_BG_TONE_MIN) {
+            this.emptyBgTone += EMPTY_BG_TONE_SPEED;
+        }
+    }
+
+    @Override
+    public void close() {
+        // Hide the chat output
+
+        // Disable the module
+        this.getClickGUI().setEnabled(false);
+
+        super.close();
+    }
+
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        this.renderBackground(context, mouseX, mouseY, delta);
+        super.render(context, mouseX, mouseY, delta);
+    }
+
+    private void renderInGameBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+        // Current background darkness
+        float current = this.backgroundDarkness;
+
+        float next = this.getNext(current, BACKGROUND_DARKNESS_SPEED, BACKGROUND_DARKNESS_MIN, 1.0f);
+
+        // Get lerped background darkness
+        float backgroundDarkness = this.lerpValue(current, next, delta);
+
+        // Actual background darkness
+        float d = 1 - backgroundDarkness;
+        
+        // Colours (ARGB)
+        int startColour = (int)(d * 100);
+        int endColour   = (int)(d * 150);
+
+        // Convert it from 0 -> 255 to 0 -> 0xFF
+        startColour = (startColour << 24) | 0x00FFFFFF;
+        endColour   = (endColour   << 24) | 0x00FFFFFF;
+
+        // Draw the background
+        context.fillGradient(0, 0, this.width, this.height, startColour, endColour);
+    }
+
+    @Override
+    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+        renderInGameBackground(context, mouseX, mouseY, delta);
     }
 }
