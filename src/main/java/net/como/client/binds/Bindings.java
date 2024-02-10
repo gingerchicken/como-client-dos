@@ -95,9 +95,11 @@ public class Bindings {
         }
     }
 
-    public void fireBind(int key) {
+    public boolean fireBind(int key) {
         // Get the lock
         this.lock.lock();
+
+        boolean fired = false;
 
         try {
             // Check if there is a bind for this key
@@ -107,7 +109,8 @@ public class Bindings {
 
                 // Loop through the list and fire each bind
                 for (Bind bind : list) {
-                    bind.fire();
+                    bind.fire(); // TODO add on another thread to prevent blocking?
+                    fired = true; // Set fired to true
                 }
             }
         } finally {
@@ -115,5 +118,6 @@ public class Bindings {
         }
 
         // TODO what if a bind bind/unbinds something?
+        return fired;
     }
 }

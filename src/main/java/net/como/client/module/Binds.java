@@ -11,6 +11,11 @@ public class Binds extends Module {
         if (event.action != 1) return;
 
         // Trigger the bind
-        ComoClient.getInstance().getBindings().fireBind(event.key);
+        if (!ComoClient.getInstance().getBindings().fireBind(event.key)) {
+            return; // No binds were triggered
+        }
+
+        // Cancel the event (prevent vanilla keybinds from triggering)
+        event.info.cancel();
     }
 }
