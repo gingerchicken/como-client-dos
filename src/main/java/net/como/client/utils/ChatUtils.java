@@ -67,6 +67,17 @@ public class ChatUtils {
         error(DEFAULT_PREFIX, message);
     }
 
+    public static void info(String name, String message) {
+        String prefix = createPrefix(name);
+        String formatted = prefix + ChatUtils.WHITE + message;
+
+        log(formatted);
+    }
+
+    public static void info(String message) {
+        info(DEFAULT_PREFIX, message);
+    }
+
     public static String createPrefix(String name) {
         return String.format("%s[%s%s%s] ", ChatUtils.WHITE, ChatUtils.GREEN, name, ChatUtils.WHITE);
     }

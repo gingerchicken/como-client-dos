@@ -4,6 +4,7 @@ import net.como.client.ComoClient;
 import net.como.client.event.EventHandler;
 import net.como.client.event.impl.KeyEvent;
 import net.como.client.module.Module;
+import net.como.client.utils.ChatUtils;
 
 public class Binds extends Module {
     public Binds() {

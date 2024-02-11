@@ -3,6 +3,7 @@ package net.como.client.module.core;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import net.como.client.ComoClient;
+import net.como.client.binds.impl.ChatCommandBind;
 import net.como.client.commands.Commands;
 import net.como.client.event.EventHandler;
 import net.como.client.event.impl.SendChatMessageEvent;
@@ -13,6 +14,11 @@ public class ChatCommands extends Module {
     public ChatCommands() {
         this.setDescription("Allows you to run commands in chat");
         this.setCategory("Core");
+
+        // Get the prefix
+        Commands commands = ComoClient.getInstance().getCommands();
+        char prefix = commands.getPrefix().charAt(0);
+        ComoClient.getInstance().getBindings().appendBind((int)prefix, new ChatCommandBind());
     }
 
     @EventHandler
@@ -30,7 +36,7 @@ public class ChatCommands extends Module {
         try {
             commands.dispatch(subMessage);
         } catch (CommandSyntaxException e)  {
-            ChatUtils.error(e.getContext());
+            ChatUtils.error(e.toString());
         }
 
         // Cancel the original message
