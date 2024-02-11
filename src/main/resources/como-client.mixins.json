@@ -8,7 +8,8 @@
   "client": [
     "TitleScreenLogoMixin",
     "ClientPlayerEntityMixin",
-    "KeyboardMixin"
+    "KeyboardMixin",
+    "ClientPlayNetworkHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

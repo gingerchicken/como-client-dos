@@ -1,10 +1,16 @@
-package net.como.client.module;
+package net.como.client.module.core;
 
 import net.como.client.ComoClient;
 import net.como.client.event.EventHandler;
 import net.como.client.event.impl.KeyEvent;
+import net.como.client.module.Module;
 
 public class Binds extends Module {
+    public Binds() {
+        this.setDescription("Allows you to use keys to trigger events");
+        this.setCategory("Core");
+    }
+
     @EventHandler
     public void onKeyEvent(KeyEvent event) {
         // Ensure key down

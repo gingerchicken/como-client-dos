@@ -1,11 +1,13 @@
 package net.como.client;
 
 import net.como.client.binds.Bindings;
+import net.como.client.commands.Commands;
 import net.como.client.event.EventEmitter;
 import net.como.client.event.RegistrationWorker;
 import net.como.client.event.RegistrationWorkerDaemon;
-import net.como.client.module.Binds;
 import net.como.client.module.Module;
+import net.como.client.module.core.Binds;
+import net.como.client.module.core.ChatCommands;
 import net.como.client.module.render.*;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.MinecraftClient;
@@ -32,6 +34,21 @@ public class ComoClient implements ModInitializer {
     // Key binds
     private final Bindings bindings = new Bindings();
 
+    // Commands
+    private final Commands commands = new Commands();
+
+    /**
+     * Get the commands instance
+     * @return the commands instance
+     */
+    public Commands getCommands() {
+        return commands;
+    }
+
+    /**
+     * Get the key binds instance
+     * @return the key binds instance
+     */
     public Bindings getBindings() {
         return bindings;
     }
@@ -78,6 +95,9 @@ public class ComoClient implements ModInitializer {
 
         // Register modules
         this.registerModules();
+
+        // Register the commands
+        this.commands.registerAll();
 	}
 
     public boolean registerModule(Module module) {
@@ -110,9 +130,11 @@ public class ComoClient implements ModInitializer {
         this.registerModule(new Binds());
         this.registerModule(new Greeter());
         this.registerModule(new ClickGUI());
+        this.registerModule(new ChatCommands());
 
         this.getModuleByClass(Binds.class).setEnabled(true);
         this.getModuleByClass(Greeter.class).setEnabled(true);
+        this.getModuleByClass(ChatCommands.class).setEnabled(true);
     }
 
     public MinecraftClient getClient() {
