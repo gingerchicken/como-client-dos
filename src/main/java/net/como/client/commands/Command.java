@@ -8,12 +8,16 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.command.CommandSource;
+import net.minecraft.text.Text;
 
 public abstract class Command {
     private final String name;
     private final String description;
     private final List<String> aliases = new ArrayList<>();
+
+    public final static SimpleCommandExceptionType CREATIVE_EXCEPTION = new SimpleCommandExceptionType(Text.of("You must be in creative mode to use this command"));
 
     public Command(String name, String description, String... aliases) {
         this.name = name;

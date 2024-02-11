@@ -7,14 +7,15 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import net.como.client.commands.impl.CheckCommand;
+import net.como.client.commands.impl.CorruptCommand;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientCommandSource;
 import net.minecraft.command.CommandSource;
 
 public class Commands {
-    private final CommandDispatcher<CommandSource> dispatcher;
-    private final CommandSource source;
-    private final List<Command> commands;
+    private final CommandDispatcher<CommandSource> dispatcher = new CommandDispatcher<>();
+    private final CommandSource source = new ClientCommandSource(null, MinecraftClient.getInstance());
+    private final List<Command> commands = new ArrayList<>();
     private String prefix;
 
     /**
@@ -24,11 +25,6 @@ public class Commands {
     public Commands(String prefix) {
         // Set the prefix
         this.prefix = prefix;
-
-        // Create the dispatcher, source, and commands list
-        dispatcher = new CommandDispatcher<>(); // A new command dispatcher
-        source = new ClientCommandSource(null, MinecraftClient.getInstance()); // A client command source with no network handler
-        commands = new ArrayList<>(); // Empty list
     }
 
     /**
@@ -59,6 +55,10 @@ public class Commands {
      */
     public void registerAll() {
         register(new CheckCommand());
+        register(new CorruptCommand());
+
+        // Add all module commands
+        ModuleCommandFactory.createCommands().forEach(this::register);
     }
 
     public void register(Command command) {

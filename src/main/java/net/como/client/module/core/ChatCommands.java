@@ -35,14 +35,14 @@ public class ChatCommands extends Module {
         // Run the command
         try {
             commands.dispatch(subMessage);
-        } catch (CommandSyntaxException e)  {
-            ChatUtils.error(e.toString());
+        } catch (Exception e)  {
+            ChatUtils.error(e.getMessage());
         }
 
         // Cancel the original message
         event.info.cancel();
 
         // Add the message to the chat history
-        ComoClient.getInstance().getClient().inGameHud.getChatHud().addToMessageHistory(subMessage);
+        ComoClient.getInstance().getClient().inGameHud.getChatHud().addToMessageHistory(message);
     }
 }

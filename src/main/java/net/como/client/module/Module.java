@@ -2,6 +2,7 @@ package net.como.client.module;
 
 import net.como.client.ComoClient;
 import net.como.client.event.EventListener;
+import net.como.client.utils.ChatUtils;
 
 public abstract class Module implements EventListener {
     private boolean enabled;
@@ -25,6 +26,9 @@ public abstract class Module implements EventListener {
         if (this.enabled == enabled) return;
         this.enabled = enabled;
 
+        // Show the status message
+        showStatusMessage();
+
         // Trigger the onEnable or onDisable method
         if (enabled) {
             onEnable();
@@ -47,6 +51,12 @@ public abstract class Module implements EventListener {
     public String getName() {
         // Get the class
         return this.getClass().getSimpleName();
+    }
+
+    private void showStatusMessage() {
+        String status = isEnabled() ? ChatUtils.GREEN + "enabled" : ChatUtils.RED + "disabled";
+
+        ChatUtils.info(getName() + " is now " + status);
     }
 
     /**
