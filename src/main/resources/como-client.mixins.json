@@ -9,7 +9,9 @@
     "TitleScreenLogoMixin",
     "ClientPlayerEntityMixin",
     "KeyboardMixin",
-    "ClientPlayNetworkHandlerMixin"
+    "ClientPlayNetworkHandlerMixin",
+    "ClientPlayerInteractionManagerMixin",
+    "ClientConnectionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

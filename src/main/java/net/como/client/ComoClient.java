@@ -8,6 +8,7 @@ import net.como.client.event.RegistrationWorkerDaemon;
 import net.como.client.module.Module;
 import net.como.client.module.core.Binds;
 import net.como.client.module.core.ChatCommands;
+import net.como.client.module.exploit.PermaJukebox;
 import net.como.client.module.render.*;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.MinecraftClient;
@@ -131,6 +132,7 @@ public class ComoClient implements ModInitializer {
         this.registerModule(new Greeter());
         this.registerModule(new ClickGUI());
         this.registerModule(new ChatCommands());
+        this.registerModule(new PermaJukebox());
 
         this.getModuleByClass(Binds.class).setEnabled(true);
         this.getModuleByClass(Greeter.class).setEnabled(true);
