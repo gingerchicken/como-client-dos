@@ -11,7 +11,8 @@
     "KeyboardMixin",
     "ClientPlayNetworkHandlerMixin",
     "ClientPlayerInteractionManagerMixin",
-    "ClientConnectionMixin"
+    "ClientConnectionMixin",
+    "ChatInputSuggestionMixin"
   ],
   "injectors": {
     "defaultRequire": 1

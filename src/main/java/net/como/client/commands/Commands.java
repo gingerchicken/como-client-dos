@@ -34,6 +34,14 @@ public class Commands {
         this(".");
     }
 
+    public CommandDispatcher<CommandSource> getDispatcher() {
+        return dispatcher;
+    }
+
+    public CommandSource getSource() {
+        return source;
+    }
+
     /**
      * Set the prefix
      * @param prefix The prefix
