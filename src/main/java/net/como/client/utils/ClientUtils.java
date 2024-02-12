@@ -2,6 +2,8 @@ package net.como.client.utils;
 
 import net.como.client.ComoClient;
 import net.como.client.interfaces.IClientWorld;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.PendingUpdateManager;
 import net.minecraft.client.world.ClientWorld;
 
@@ -34,5 +36,20 @@ public class ClientUtils {
         manager.close();
 
         return current;
+    }
+
+    public static void openInventory() {
+        ComoClient.getInstance().getClient().setScreen(new InventoryScreen(ComoClient.getInstance().me()));
+    }
+
+    public static void refreshInventory() {
+        MinecraftClient client = ComoClient.getInstance().getClient();
+
+        Boolean wasMouseLocked = client.mouse.isCursorLocked();
+
+        ClientUtils.openInventory();
+        client.currentScreen = null;
+
+        if (wasMouseLocked) client.mouse.lockCursor();
     }
 }
