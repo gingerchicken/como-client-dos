@@ -47,8 +47,11 @@ public class EventEmitter {
     public void unregisterListener(EventListener listener) {
         lock.lock();
         try {
+            // Create a copy of the listeners keySet to avoid ConcurrentModificationException
+            List<Class<? extends Event>> eventTypes = new ArrayList<>(this.listeners.keySet());
+
             // Iterate over all event types
-            for (Class<? extends Event> eventType : this.listeners.keySet()) {
+            for (Class<? extends Event> eventType : eventTypes) {
                 unregisterListener(eventType, listener);
             }
         } finally {
