@@ -27,4 +27,8 @@ public class ThirdPartyUtils {
     public static boolean isCoffeeLoaded() {
         return isModLoaded("coffee");
     }
+
+    public static boolean isOtherClientLoaded() {
+        return isCoffeeLoaded() || isMeteorLoaded();
+    }
 }

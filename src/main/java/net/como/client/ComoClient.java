@@ -8,8 +8,10 @@ import net.como.client.event.RegistrationWorkerDaemon;
 import net.como.client.module.Module;
 import net.como.client.module.core.Binds;
 import net.como.client.module.core.ChatCommands;
+import net.como.client.module.exploit.InfiniteEggReach;
 import net.como.client.module.exploit.PermaJukebox;
 import net.como.client.module.render.*;
+import net.como.client.utils.ThirdPartyUtils;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -89,6 +91,7 @@ public class ComoClient implements ModInitializer {
 	@Override
 	public void onInitialize() {
         instance = this;
+        if (ThirdPartyUtils.isOtherClientLoaded()) commands.setPrefix(";");
 
 		LOGGER.info("Oh bugger, not this again.");
 
@@ -133,6 +136,7 @@ public class ComoClient implements ModInitializer {
         this.registerModule(new ClickGUI());
         this.registerModule(new ChatCommands());
         this.registerModule(new PermaJukebox());
+        this.registerModule(new InfiniteEggReach());
 
         this.getModuleByClass(Binds.class).setEnabled(true);
         this.getModuleByClass(Greeter.class).setEnabled(true);

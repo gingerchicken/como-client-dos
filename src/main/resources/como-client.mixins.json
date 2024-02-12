@@ -13,7 +13,8 @@
     "ClientPlayerInteractionManagerMixin",
     "ClientConnectionMixin",
     "ChatInputSuggestionMixin",
-    "ClientWorldMixin"
+    "ClientWorldMixin",
+    "MouseMixin"
   ],
   "injectors": {
     "defaultRequire": 1
