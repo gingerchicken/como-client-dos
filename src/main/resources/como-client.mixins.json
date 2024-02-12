@@ -12,7 +12,8 @@
     "ClientPlayNetworkHandlerMixin",
     "ClientPlayerInteractionManagerMixin",
     "ClientConnectionMixin",
-    "ChatInputSuggestionMixin"
+    "ChatInputSuggestionMixin",
+    "ClientWorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1
