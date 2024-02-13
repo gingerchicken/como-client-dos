@@ -8,6 +8,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import net.como.client.commands.impl.CheckCommand;
 import net.como.client.commands.impl.CorruptCommand;
+import net.como.client.commands.impl.MinefortFindCommand;
 import net.como.client.commands.impl.ParticleCrash;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientCommandSource;
@@ -66,6 +67,7 @@ public class Commands {
         register(new CheckCommand());
         register(new CorruptCommand());
         register(new ParticleCrash());
+        register(new MinefortFindCommand());
 
         // Add all module commands
         ModuleCommandFactory.createCommands().forEach(this::register);
