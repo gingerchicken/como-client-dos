@@ -18,6 +18,7 @@ public abstract class Command {
     private final List<String> aliases = new ArrayList<>();
 
     public final static SimpleCommandExceptionType CREATIVE_EXCEPTION = new SimpleCommandExceptionType(Text.of("You must be in creative mode to use this command"));
+    public final static SimpleCommandExceptionType OP_EXCEPTION = new SimpleCommandExceptionType(Text.of("You must be an operator to use this command"));
 
     public Command(String name, String description, String... aliases) {
         this.name = name;
