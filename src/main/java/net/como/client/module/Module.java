@@ -88,4 +88,12 @@ public abstract class Module implements EventListener {
     public String getDescription() {
         return description;
     }
+
+    protected void info(String message) {
+        ChatUtils.info(this.getName(), message);
+    }
+
+    protected void error(String message) {
+        ChatUtils.error(this.getName(), message);
+    }
 }
