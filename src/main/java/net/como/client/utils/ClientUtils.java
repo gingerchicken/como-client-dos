@@ -6,6 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.network.PendingUpdateManager;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.item.ItemStack;
 
 public class ClientUtils {
     public static boolean isInGame() {
@@ -51,5 +52,9 @@ public class ClientUtils {
         client.currentScreen = null;
 
         if (wasMouseLocked) client.mouse.lockCursor();
+    }
+
+    public static ItemStack getHandlerSlot(int i) {
+        return ComoClient.getInstance().me().currentScreenHandler.getSlot(i).getStack();
     }
 }

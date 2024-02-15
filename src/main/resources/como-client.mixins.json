@@ -16,7 +16,10 @@
     "ClientWorldMixin",
     "MouseMixin",
 
-    "botch/lecterncrash/LecternScreenMixin"
+    "botch/lecterncrash/LecternScreenMixin",
+
+    "botch/shulkerdupe/ShulkerScreenMixin",
+    "botch/shulkerdupe/ClientConnectionMixin"
   ],
   "injectors": {
     "defaultRequire": 1
