@@ -9,6 +9,7 @@ import net.como.client.module.Module;
 import net.como.client.module.core.Binds;
 import net.como.client.module.core.ChatCommands;
 import net.como.client.module.exploit.InfiniteEggReach;
+import net.como.client.module.exploit.InstaBowKill;
 import net.como.client.module.exploit.NoComCrash;
 import net.como.client.module.exploit.PermaJukebox;
 import net.como.client.module.render.*;
@@ -139,6 +140,7 @@ public class ComoClient implements ModInitializer {
         this.registerModule(new PermaJukebox());
         this.registerModule(new InfiniteEggReach());
         this.registerModule(new NoComCrash());
+        this.registerModule(new InstaBowKill());
 
         this.getModuleByClass(Binds.class).setEnabled(true);
         this.getModuleByClass(Greeter.class).setEnabled(true);

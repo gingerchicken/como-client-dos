@@ -4,6 +4,7 @@ import net.como.client.ComoClient;
 import net.como.client.event.impl.AttackEntityEvent;
 import net.como.client.event.impl.InteractBlockEvent;
 import net.como.client.event.impl.InteractEntityAtLocationEvent;
+import net.como.client.event.impl.StopUsingItemEvent;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,6 +39,13 @@ public class ClientPlayerInteractionManagerMixin {
     public void interactEntityAtLocation(PlayerEntity player, Entity target, EntityHitResult hitResult, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         ComoClient.getInstance().getEventEmitter().emitEvent(
                 new InteractEntityAtLocationEvent(player, target, hitResult, hand, cir)
+        );
+    }
+
+    @Inject(method = "stopUsingItem", at = @At("HEAD"), cancellable = true)
+    public void stopUsingItem(PlayerEntity playerEntity, CallbackInfo ci) {
+        ComoClient.getInstance().getEventEmitter().emitEvent(
+                new StopUsingItemEvent(playerEntity, ci)
         );
     }
 }
