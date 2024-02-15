@@ -14,7 +14,9 @@
     "ClientConnectionMixin",
     "ChatInputSuggestionMixin",
     "ClientWorldMixin",
-    "MouseMixin"
+    "MouseMixin",
+
+    "botch/lecterncrash/LecternScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
