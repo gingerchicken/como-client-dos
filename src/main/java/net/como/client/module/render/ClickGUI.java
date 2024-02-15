@@ -12,6 +12,7 @@ public class ClickGUI extends Module {
 
     public ClickGUI() {
         this.setDescription("The ClickGUI module");
+        this.setCategory("Render");
 
         // TODO perhaps move this?
         ComoClient.getInstance().getBindings().appendBind(344, new ModuleBind(this));

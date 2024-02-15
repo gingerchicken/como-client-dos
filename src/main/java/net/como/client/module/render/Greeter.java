@@ -8,6 +8,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 
 public class Greeter extends Module {
+    public Greeter() {
+        this.setDescription("Greets the user on the title screen.");
+        this.setCategory("Render");
+    }
+
     @EventHandler
     public void renderTitleWatermark(TitleScreenRenderEvent event) {
         MinecraftClient client = MinecraftClient.getInstance();

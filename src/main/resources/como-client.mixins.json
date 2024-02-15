@@ -15,6 +15,7 @@
     "ChatInputSuggestionMixin",
     "ClientWorldMixin",
     "MouseMixin",
+    "ClientCommonNetworkHandlerMixin",
 
     "botch/lecterncrash/LecternScreenMixin",
 
