@@ -135,7 +135,7 @@ public class ComoClient implements ModInitializer {
         this.registerModule(new ClickGUI());
         this.registerModule(new ChatCommands());
         this.registerModule(new PermaJukebox());
-        this.registerModule(new InfiniteEggReach());
+        this.registerModule(new Placer());
         this.registerModule(new NoComCrash());
         this.registerModule(new InstaBowKill());
         this.registerModule(new LecternCrash());
