@@ -19,7 +19,9 @@
     "botch/lecterncrash/LecternScreenMixin",
 
     "botch/shulkerdupe/ShulkerScreenMixin",
-    "botch/shulkerdupe/ClientConnectionMixin"
+    "botch/shulkerdupe/ClientConnectionMixin",
+
+    "botch/craftingdupe/InventoryScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
