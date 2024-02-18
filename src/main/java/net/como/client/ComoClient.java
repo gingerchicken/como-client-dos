@@ -148,6 +148,7 @@ public class ComoClient implements ModInitializer {
         this.registerModule(new AntiResoursePack());
         this.registerModule(new NoSwing());
         this.registerModule(new Dancer());
+        this.registerModule(new GamemodeAlert());
 
         this.getModuleByClass(Binds.class).setEnabled(true);
         this.getModuleByClass(Greeter.class).setEnabled(true);
