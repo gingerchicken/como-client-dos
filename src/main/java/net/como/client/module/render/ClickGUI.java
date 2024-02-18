@@ -15,7 +15,7 @@ public class ClickGUI extends Module {
         this.setCategory("Render");
 
         // TODO perhaps move this?
-        ComoClient.getInstance().getBindings().appendBind(344, new ModuleBind(this));
+        ComoClient.getInstance().getBindings().appendBind(260, new ModuleBind(this)); // Insert key
     }
 
     @Override
