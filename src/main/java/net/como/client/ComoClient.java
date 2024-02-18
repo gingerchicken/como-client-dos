@@ -5,11 +5,13 @@ import net.como.client.commands.Commands;
 import net.como.client.event.EventEmitter;
 import net.como.client.event.RegistrationWorker;
 import net.como.client.event.RegistrationWorkerDaemon;
+
 import net.como.client.module.Module;
-import net.como.client.module.core.Binds;
-import net.como.client.module.core.ChatCommands;
+import net.como.client.module.core.*;
 import net.como.client.module.exploit.*;
 import net.como.client.module.render.*;
+import net.como.client.module.misc.*;
+
 import net.como.client.utils.ThirdPartyUtils;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.client.MinecraftClient;
@@ -144,6 +146,7 @@ public class ComoClient implements ModInitializer {
         this.registerModule(new ArmourStandCrash());
         this.registerModule(new CraftDupe());
         this.registerModule(new AntiResoursePack());
+        this.registerModule(new NoSwing());
 
         this.getModuleByClass(Binds.class).setEnabled(true);
         this.getModuleByClass(Greeter.class).setEnabled(true);
