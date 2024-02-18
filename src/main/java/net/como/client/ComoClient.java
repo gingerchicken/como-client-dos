@@ -147,6 +147,7 @@ public class ComoClient implements ModInitializer {
         this.registerModule(new CraftDupe());
         this.registerModule(new AntiResoursePack());
         this.registerModule(new NoSwing());
+        this.registerModule(new Dancer());
 
         this.getModuleByClass(Binds.class).setEnabled(true);
         this.getModuleByClass(Greeter.class).setEnabled(true);
