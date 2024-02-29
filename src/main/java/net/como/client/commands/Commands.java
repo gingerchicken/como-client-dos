@@ -66,6 +66,7 @@ public class Commands {
         register(new ParticleCrash());
         register(new MinefortFindCommand());
         register(new PositionCrash());
+        register(new CommandTargetCrash());
 
         // Add all module commands
         ModuleCommandFactory.createCommands().forEach(this::register);
