@@ -36,7 +36,8 @@ public class Dancer extends Module {
     protected void onDisable() {
         super.onDisable();
 
-        dancerThread.interrupt();
+        if (dancerThread != null)
+            dancerThread.interrupt();
 
         getArmOption().setValue(originalArm);
     }
